@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Save a new user")
+    @ApiOperation(value = "Create a new user")
     public UserVO saveUser(@RequestBody UserVO user) {
         return userService.saveUser(user);
     }

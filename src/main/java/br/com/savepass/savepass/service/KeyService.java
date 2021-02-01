@@ -33,6 +33,10 @@ public class KeyService {
         return mapper.map(keyRepository.findById(id).orElseThrow(), KeyVO.class);
     }
 
+    public KeyVO findKeyLocal(String local) {
+        return mapper.map(keyRepository.findByLocal(local).orElseThrow(), KeyVO.class);
+    }
+
     public KeyVO saveKey(KeyVO keyVO) {
         var user = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserVO userVO = userService.findUserByUserName(user.getUsername());

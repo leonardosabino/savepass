@@ -37,7 +37,7 @@ public class KeyController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Save a new key")
+    @ApiOperation(value = "Create a new key")
     public KeyVO saveKey(@RequestBody KeyVO keyEntity) {
         return keyService.saveKey(keyEntity);
     }
