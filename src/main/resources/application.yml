@@ -8,3 +8,14 @@ spring:
   data:
     mongodb:
       database: savepass
+
+  security:
+    basic:
+      enable: false
+
+    jwt:
+      uri: /auth/**
+      header: Authorization
+      prefix: Bearer
+      expiration: 86400
+      secret: JwtSecretKey

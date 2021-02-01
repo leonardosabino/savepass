@@ -21,8 +21,8 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
                 .title(TITLE)
                 .description(DESC)
-                .contact(new Contact("Leonardo Sabino", "http://www.github.com/l-sabino",
-                        "http://www.github.com/l-sabino"))
+                .contact(new Contact("Leonardo Sabino", "http://www.github.com/leonardosabino",
+                        "http://www.github.com/leonardosabino"))
                 .version(SWAGGER_API_VERSION)
                 .build();
     }
