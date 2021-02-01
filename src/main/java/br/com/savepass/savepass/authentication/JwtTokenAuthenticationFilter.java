@@ -33,20 +33,14 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        // 1. get the authentication header. Tokens are supposed to be passed in the authentication header
+        // 1. Get the authentication header. Tokens are supposed to be passed in the authentication header
         String header = request.getHeader(jwtConfig.getHeader());
 
-        // 2. validate the header and check the prefix
+        // 2. Validate the header and check the prefix
         if(header == null || !header.startsWith(jwtConfig.getPrefix())) {
             chain.doFilter(request, response);  		// If not valid, go to the next filter.
             return;
         }
-
-        // If there is no token provided and hence the user won't be authenticated.
-        // It's Ok. Maybe the user accessing a public path or asking for a token.
-
-        // All secured paths that needs a token are already defined and secured in config class.
-        // And If user tried to access without access token, then he won't be authenticated and an exception will be thrown.
 
         // 3. Get the token
         String token = header.replace(jwtConfig.getPrefix(), "");
@@ -56,7 +50,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             String username = claims.getSubject();
 
             var user = userService.findUserByUserName(username);
-//            var userDetails = new UserDetails();
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     user, null, null);
@@ -68,7 +61,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
         }
 
-        // go to the next filter in the filter chain
+        // Go to the next filter in the filter chain
         chain.doFilter(request, response);
     }
 

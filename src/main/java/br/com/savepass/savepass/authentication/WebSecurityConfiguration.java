@@ -43,6 +43,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtConfiguration jwtConfiguration;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -64,22 +67,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/webjars/springfox-swagger-ui/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/signin", "/v1/user/**").permitAll()
                 .anyRequest().authenticated();
-    }
-
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        byte[] signingKey = Base64.getEncoder().encode("mysecret".getBytes());
-        return token -> {
-            io.jsonwebtoken.Jws<Claims> jjwt = Jwts.parser()
-                    .setSigningKey(signingKey)
-                    .parseClaimsJws(token);
-            Date issuedAt = jjwt.getBody().getIssuedAt();
-            Date expiration= jjwt.getBody().getExpiration();
-            JwsHeader<?> headers = jjwt.getHeader();
-            Claims claims = jjwt.getBody();
-
-            return new Jwt("token", issuedAt.toInstant(), expiration.toInstant(), headers, claims);
-        };
     }
 
     @Bean

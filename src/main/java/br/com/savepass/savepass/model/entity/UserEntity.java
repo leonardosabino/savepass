@@ -19,7 +19,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity  implements UserDetails {
+public class UserEntity {
 
     @Id
     private String id;
@@ -28,34 +28,21 @@ public class UserEntity  implements UserDetails {
 
     private String password;
 
+    private boolean active;
+
     @CreatedDate
     private LocalDate createdDate;
 
     @LastModifiedDate
     private LocalDate lastModifiedDate;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public UserEntity(UserEntity userEntity) {
+        this.id = userEntity.id;
+        this.username = userEntity.username;
+        this.password = userEntity.password;
+        this.active = userEntity.active;
+        this.createdDate = userEntity.createdDate;
+        this.lastModifiedDate = userEntity.lastModifiedDate;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }

@@ -4,16 +4,22 @@ import br.com.savepass.savepass.model.entity.UserEntity;
 import br.com.savepass.savepass.model.mapper.Mapper;
 import br.com.savepass.savepass.model.vo.UserVO;
 import br.com.savepass.savepass.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private Mapper mapper;
@@ -31,7 +37,18 @@ public class UserService {
     }
 
     public UserVO saveUser(UserVO userVO) {
-        UserEntity userEntity = mapper.map(userVO, UserEntity.class);
+        log.info("registering user {}", userVO.getUsername());
+
+        if(userRepository.existsByUsername(userVO.getUsername())) {
+            log.warn("username {} already exists.", userVO.getUsername());
+            // throw new UsernameAlreadyExistsException(String.format("username %s already exists", user.getUsername()));
+            throw new IllegalArgumentException();
+        }
+
+        var userEntity = mapper.map(userVO, UserEntity.class);
+        userEntity.setActive(true);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+
         return mapper.map(userRepository.save(userEntity), UserVO.class);
     }
 
