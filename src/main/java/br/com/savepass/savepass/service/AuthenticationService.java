@@ -2,10 +2,8 @@ package br.com.savepass.savepass.service;
 
 import br.com.savepass.savepass.authentication.InstaUserDetails;
 import br.com.savepass.savepass.authentication.JwtTokenProvider;
-import br.com.savepass.savepass.model.entity.UserEntity;
 import br.com.savepass.savepass.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

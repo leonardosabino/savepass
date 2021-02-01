@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,5 +40,17 @@ public class UserController {
     @ApiOperation(value = "Save a new user")
     public UserVO saveUser(@RequestBody UserVO user) {
         return userService.saveUser(user);
+    }
+
+    @DeleteMapping("{id}")
+    @ApiOperation(value = "Delete a existent key")
+    public void deleteKey(@PathVariable String id) {
+        userService.deleteUser(id);
+    }
+
+    @DeleteMapping
+    @ApiOperation(value = "Delete all existent keys")
+    public void deleteKey() {
+        userService.deleteUser();
     }
 }

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UserVO {
 
+    @ApiModelProperty(hidden = true)
     private String id;
 
     private String username;

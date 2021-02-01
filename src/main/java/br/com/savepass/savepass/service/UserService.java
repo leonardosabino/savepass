@@ -39,7 +39,7 @@ public class UserService {
     public UserVO saveUser(UserVO userVO) {
         log.info("registering user {}", userVO.getUsername());
 
-        if(userRepository.existsByUsername(userVO.getUsername())) {
+        if (userRepository.existsByUsername(userVO.getUsername())) {
             log.warn("username {} already exists.", userVO.getUsername());
             // throw new UsernameAlreadyExistsException(String.format("username %s already exists", user.getUsername()));
             throw new IllegalArgumentException();

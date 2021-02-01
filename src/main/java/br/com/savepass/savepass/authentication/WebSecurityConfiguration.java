@@ -1,9 +1,6 @@
 package br.com.savepass.savepass.authentication;
 
 import br.com.savepass.savepass.service.UserService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwsHeader;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -16,16 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Base64;
-import java.util.Date;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

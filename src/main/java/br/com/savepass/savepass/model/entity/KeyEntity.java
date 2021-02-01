@@ -21,6 +21,8 @@ public class KeyEntity {
     @Id
     private String id;
 
+    private String idUser;
+
     private String local;
 
     private String password;

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class KeyVO {
 
+    @ApiModelProperty(hidden = true)
     private String id;
 
     private String local;

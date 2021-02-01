@@ -10,9 +10,6 @@ spring:
       database: savepass
 
 security:
-  basic:
-    enable: false
-
   jwt:
     uri: /auth/**
     header: Authorization
