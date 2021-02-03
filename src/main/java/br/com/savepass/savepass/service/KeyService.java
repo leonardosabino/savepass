@@ -30,11 +30,15 @@ public class KeyService {
     }
 
     public KeyVO findKeyById(String id) {
-        return mapper.map(keyRepository.findById(id).orElseThrow(), KeyVO.class);
+        var user = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return mapper.map(keyRepository.findByIdAndIdUser(id, user.getId()).orElseThrow(), KeyVO.class);
     }
 
     public KeyVO findKeyLocal(String local) {
-        return mapper.map(keyRepository.findByLocal(local).orElseThrow(), KeyVO.class);
+        var user = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return mapper.map(keyRepository.findByLocalAndIdUser(local, user.getId()).orElseThrow(), KeyVO.class);
     }
 
     public KeyVO saveKey(KeyVO keyVO) {

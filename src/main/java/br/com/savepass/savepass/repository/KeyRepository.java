@@ -10,7 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface KeyRepository extends MongoRepository<KeyEntity, String>, PagingAndSortingRepository<KeyEntity, String> {
-    Optional<KeyEntity> findByLocal(String local);
+    Optional<KeyEntity> findByIdAndIdUser(String id, String idUser);
+
+    Optional<KeyEntity> findByLocalAndIdUser(String local, String idUser);
 
     List<KeyEntity> findByIdUser(String idUser);
 }
