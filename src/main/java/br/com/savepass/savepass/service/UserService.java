@@ -1,5 +1,6 @@
 package br.com.savepass.savepass.service;
 
+import br.com.savepass.savepass.exception.UsernameAlreadyExistsException;
 import br.com.savepass.savepass.model.entity.UserEntity;
 import br.com.savepass.savepass.model.mapper.Mapper;
 import br.com.savepass.savepass.model.vo.UserVO;
@@ -41,8 +42,7 @@ public class UserService {
 
         if (userRepository.existsByUsername(userVO.getUsername())) {
             log.warn("username {} already exists.", userVO.getUsername());
-            // throw new UsernameAlreadyExistsException(String.format("username %s already exists", user.getUsername()));
-            throw new IllegalArgumentException();
+            throw new UsernameAlreadyExistsException(String.format("Username %s already exists", userVO.getUsername()));
         }
 
         var userEntity = mapper.map(userVO, UserEntity.class);
@@ -53,10 +53,12 @@ public class UserService {
     }
 
     public void deleteUser(String id) {
+        log.info("deleting user {}", id);
         userRepository.deleteById(id);
     }
 
     public void deleteUser() {
+        log.info("deleting all users");
         userRepository.deleteAll();
     }
 

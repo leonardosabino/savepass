@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Document(value = "key")
@@ -16,7 +17,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyEntity {
+public class KeyEntity implements Serializable {
+
+    private static final long serialVersionUID = 3303255090712891306L;
 
     @Id
     private String id;

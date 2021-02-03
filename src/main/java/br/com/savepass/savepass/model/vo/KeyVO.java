@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -15,8 +16,10 @@ public class KeyVO {
     @ApiModelProperty(hidden = true)
     private String id;
 
+    @NotNull
     private String local;
 
+    @NotNull
     private String password;
 
     @ApiModelProperty(hidden = true)

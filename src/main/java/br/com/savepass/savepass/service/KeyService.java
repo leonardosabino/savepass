@@ -1,10 +1,12 @@
 package br.com.savepass.savepass.service;
 
+import br.com.savepass.savepass.exception.NotFoundException;
 import br.com.savepass.savepass.model.entity.KeyEntity;
 import br.com.savepass.savepass.model.mapper.Mapper;
 import br.com.savepass.savepass.model.vo.KeyVO;
 import br.com.savepass.savepass.model.vo.UserVO;
 import br.com.savepass.savepass.repository.KeyRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class KeyService {
 
     @Autowired
@@ -32,16 +35,13 @@ public class KeyService {
     public KeyVO findKeyById(String id) {
         var user = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return mapper.map(keyRepository.findByIdAndIdUser(id, user.getId()).orElseThrow(), KeyVO.class);
-    }
-
-    public KeyVO findKeyLocal(String local) {
-        var user = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return mapper.map(keyRepository.findByLocalAndIdUser(local, user.getId()).orElseThrow(), KeyVO.class);
+        return mapper.map(keyRepository.findByIdAndIdUser(id, user.getId())
+                .orElseThrow(() -> new NotFoundException(String.format("Key %s not found", id))), KeyVO.class);
     }
 
     public KeyVO saveKey(KeyVO keyVO) {
+        log.info("registering key {}", keyVO.getLocal());
+
         var user = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserVO userVO = userService.findUserByUserName(user.getUsername());
 
@@ -51,10 +51,12 @@ public class KeyService {
     }
 
     public void deleteKey(String id) {
+        log.info("deleting key {}", id);
         keyRepository.deleteById(id);
     }
 
     public void deleteKey() {
+        log.info("deleting all keys");
         keyRepository.deleteAll();
     }
 
